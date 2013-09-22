@@ -17,6 +17,7 @@ public class PlayerRegistrationImpl implements PlayerRegistration{
 	
 	Long endTime;
 	GameState state = GameStateFactory.getGameState();
+	char playerChar = 'A';
 	
 	public Map<String, String> register(String name) throws RemoteException{
 		
@@ -24,26 +25,31 @@ public class PlayerRegistrationImpl implements PlayerRegistration{
 		Player newPlayer = new Player(name, UUID.randomUUID().toString());
 		Map<String,Player> players = state.getPlayers();
 		Long waitTime;
+		
 		synchronized (players) {
 			if(players.isEmpty()){
-				endTime = System.currentTimeMillis() + 20000;
+				endTime = System.currentTimeMillis() + 10000;
 				state.initializeGame();
 			}
 			
 			waitTime = endTime - System.currentTimeMillis();
-			
+			newPlayer.setPlayerDispId(playerChar);
+			registrationProps.put("playerDisplayId", String.valueOf((playerChar++)));
 			if(waitTime >= 0){
 				players.put(newPlayer.getId() , newPlayer);
 				while(!state.initializePlayer(newPlayer.getId()))
 					;
 			}
 		}
-	
 		registrationProps.put("id", newPlayer.getId());
 		registrationProps.put("waitTime", (waitTime > 0) ? String.valueOf(waitTime): "0" );
 		registrationProps.put("startRow" , String.valueOf(newPlayer.getCurrentRow()));
 		registrationProps.put("startCol" , String.valueOf(newPlayer.getCurrentCol()));
 		registrationProps.put("isSuccessful", String.valueOf((waitTime >= 0)));
 		return registrationProps;
+	}
+
+	public GameState getInitialGameState() throws RemoteException {
+		return state;
 	}
 }

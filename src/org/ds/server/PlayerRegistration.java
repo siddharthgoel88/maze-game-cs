@@ -9,4 +9,5 @@ import java.util.Map;
  */
 public interface PlayerRegistration extends Remote{
 	public Map<String, String> register(String name) throws RemoteException;
+	public GameState getInitialGameState() throws RemoteException;
 }
