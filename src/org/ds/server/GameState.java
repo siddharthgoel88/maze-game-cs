@@ -78,4 +78,12 @@ public class GameState implements Serializable {
 		gameBoard[player.currentRow][player.currentCol].isFree = true;
 		gameBoard[player.currentRow][player.currentCol].userId = null;
 	}
+
+	public int getTotalNumTreasures() {
+		return totalNumTreasures;
+	}
+
+	public void setTotalNumTreasures(int totalNumTreasures) {
+		this.totalNumTreasures = totalNumTreasures;
+	}
 }
