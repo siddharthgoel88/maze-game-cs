@@ -37,7 +37,7 @@ public class RMIClientManager {
 		return movePlayerStub;
 	}
 
-	public void setMovePlayerStub(MovePlayers movePlayerStub) {
-		this.movePlayerStub = movePlayerStub;
-	}
+//	public void setMovePlayerStub(MovePlayers movePlayerStub) {
+//		this.movePlayerStub = movePlayerStub;
+//	}
 }

@@ -4,6 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import org.ds.client.ServerProperties;
 import org.ds.server.ClientHeartBeat;
 import org.ds.server.MovePlayers;
 import org.ds.server.PlayerRegistration;
@@ -37,7 +38,7 @@ public class Server {
 			movePlayersStub = (MovePlayers) UnicastRemoteObject.exportObject(
 					movePlayersObj, 0);
 			
-			registry = LocateRegistry.createRegistry(1099);
+			registry = LocateRegistry.getRegistry(ServerProperties.getServerHostname(),ServerProperties.getServerPort());
 			registry.bind("registrationManager", regStub);
 			registry.bind("heartBeatManager" , heartBeatStub);
 			registry.bind("movePlayers",movePlayersStub);

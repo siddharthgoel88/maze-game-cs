@@ -21,9 +21,9 @@ public class MovePlayersImpl implements MovePlayers{
 	
 	public synchronized Map<String,Object> move(String id, String move) throws RemoteException {
 		Player player = state.getPlayers().get(id);
-		System.out.println("Before:" + player.getCurrentCol()+","+player.getCurrentRow());
+	//	System.out.println("Before:" + player.getCurrentCol()+","+player.getCurrentRow());
 		Map<String,Object> map = moveIfValid(player, move);
-		System.out.println("After:" + player.getCurrentCol()+","+player.getCurrentRow());
+	//	System.out.println("After:" + player.getCurrentCol()+","+player.getCurrentRow());
 		return map;
 	}
 	

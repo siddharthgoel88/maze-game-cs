@@ -1,14 +1,11 @@
 package org.ds.client;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.rmi.registry.*;
 import java.util.Map;
 
 import org.ds.server.GameState;
 import org.ds.server.Player;
-import org.ds.server.PlayerRegistration;
 import org.ds.server.Square;
 
 public class PlayGame {
@@ -41,14 +38,14 @@ public class PlayGame {
 		    
 		    while(true){
 				BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-			    String move;   
+			    String move;
 				move = bufferRead.readLine().toLowerCase();
 				if(move.matches("[asdwqn]")){
 					Map<String,Object> moveResult = clientManager.getMovePlayerStub().move(p1.getId(), move);
 					if(!Boolean.valueOf((String) moveResult.get("isSuccessful"))){
 						System.out.println((String)moveResult.get("errorMessage"));
 					}
-					System.out.println(moveResult.get("currentState"));
+//					System.out.println(moveResult.get("currentState"));
 					printState((GameState)moveResult.get("currentState"));
 				}else{
 					System.out.println("Invalid Entry. Please re-enter your move");
@@ -70,9 +67,9 @@ public class PlayGame {
 			for(int j=0 ; j < boardsize ; j++){
 				if(!square[i][j].isFree()){
 					Player curPlayer = players.get(square[i][j].getUserId());
-					System.out.print(curPlayer.getPlayerDispId() + "(" + curPlayer.getNumTreasures() + ") |");
+					System.out.print(curPlayer.getPlayerDispId() + "(" + curPlayer.getNumTreasures() + ")" + "\t");
 				}else{
-					System.out.print( square[i][j].getNumTreasures() +" | ");
+					System.out.print(square[i][j].getNumTreasures() + "\t");
 				}
 			}
 		}

@@ -6,14 +6,13 @@ import org.ds.server.Player;
 
 public class HeartBeatThread implements Runnable{
 	
-	RMIClientManager clientManager;
 	ClientHeartBeat heartBeat;
 	Player player;
 	
 	@Override
 	public void run() {
-		clientManager = RMIClientManagerFactory.getRMIClientManager();
-		heartBeat = clientManager.getHeartBeatStub();
+		heartBeat = RMIClientManagerFactory.getRMIClientManager().getHeartBeatStub();
+		
 		while(true){
 			
 			try {
