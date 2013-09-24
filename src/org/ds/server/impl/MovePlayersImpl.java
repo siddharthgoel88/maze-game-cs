@@ -3,7 +3,6 @@ package org.ds.server.impl;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.ds.server.GameState;
 import org.ds.server.GameStateFactory;
@@ -14,6 +13,7 @@ import org.ds.server.Square;
 
 public class MovePlayersImpl implements MovePlayers{
 	GameState state;
+	static int maxTreasure=0;
 	
 	public MovePlayersImpl(){
 		state = GameStateFactory.getGameState();
@@ -31,6 +31,7 @@ public class MovePlayersImpl implements MovePlayers{
 		
 		int resCol=player.getCurrentCol(),resRow = player.getCurrentRow();
 		Map<String , Object> moveMap = new HashMap<String, Object>();
+		Map<String , String> winner = new HashMap<String, String>();
 		Square[][] board = state.getGameBoard(); 
 		
 		if(move.equals(MoveConstants.NOMOVE)){
@@ -67,6 +68,15 @@ public class MovePlayersImpl implements MovePlayers{
 			state.setTotalNumTreasures(state.getTotalNumTreasures() - board[resRow][resCol].getNumTreasures());
 			board[resRow][resCol].setNumTreasures(0);
 		}
+		
+		if(player.getNumTreasures() > maxTreasure)
+		{
+			winner.put("maxTreasure", String.valueOf(player.getNumTreasures()));
+			winner.put("name", player.getName());
+			state.setWinner(winner);
+			maxTreasure = player.getNumTreasures();
+		}
+		
 		moveMap.put("currentState",state);
 		return moveMap;
 	}

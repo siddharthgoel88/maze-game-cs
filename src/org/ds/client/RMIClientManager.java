@@ -6,6 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import org.ds.server.ClientHeartBeat;
+import org.ds.server.GameEndCheck;
 import org.ds.server.MovePlayers;
 import org.ds.server.PlayerRegistration;
 
@@ -15,6 +16,7 @@ public class RMIClientManager {
 	private PlayerRegistration playerRegstub;
 	private ClientHeartBeat heartBeatStub;
 	private MovePlayers movePlayerStub;
+	private GameEndCheck gameEndStub;
 	
 	public RMIClientManager() throws RemoteException, NotBoundException{
 		if(registryCon == null){
@@ -22,6 +24,7 @@ public class RMIClientManager {
 			playerRegstub = (PlayerRegistration) registryCon.lookup("registrationManager");
 			heartBeatStub = (ClientHeartBeat) registryCon.lookup("heartBeatManager");
 			movePlayerStub = (MovePlayers) registryCon.lookup("movePlayers");
+			gameEndStub = (GameEndCheck) registryCon.lookup("gameEndCheck");
 		}
 	}
 	
@@ -35,6 +38,10 @@ public class RMIClientManager {
 
 	public MovePlayers getMovePlayerStub() {
 		return movePlayerStub;
+	}
+
+	public GameEndCheck getGameEndStub() {
+		return gameEndStub;
 	}
 
 //	public void setMovePlayerStub(MovePlayers movePlayerStub) {

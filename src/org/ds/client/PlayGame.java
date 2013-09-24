@@ -1,6 +1,7 @@
 package org.ds.client;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 
@@ -14,7 +15,14 @@ public class PlayGame {
 	
 	public static void main(String[] args) {
 		
-		Player p1 = new Player("name");
+		System.out.println("Hello. Please enter your name:");
+		BufferedReader name = new BufferedReader(new InputStreamReader(System.in));
+		Player p1=null;
+		try {
+			p1 = new Player((String)name.readLine().toString());
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		try {
 			RMIClientManager clientManager = RMIClientManagerFactory.initClientManager();
@@ -33,6 +41,11 @@ public class PlayGame {
 			heartBeat.setPlayer(p1);
 			heartBeatThread.start();
 			
+			GameEndCheckThread gameEndCheck = new GameEndCheckThread();
+			Thread gameEndCheckThread = new Thread(gameEndCheck);
+			gameEndCheckThread.start();
+			
+			
 		    GameState initState = clientManager.getRegistrationStub().getInitialGameState();
 		    printState(initState);
 		    
@@ -46,10 +59,13 @@ public class PlayGame {
 						System.out.println((String)moveResult.get("errorMessage"));
 					}
 //					System.out.println(moveResult.get("currentState"));
+					System.out.println("Total number of treasures I acquired:" + (((GameState)moveResult.get("currentState")).getPlayers().get((String)p1.getId())).getNumTreasures());
 					printState((GameState)moveResult.get("currentState"));
+		
 				}else{
 					System.out.println("Invalid Entry. Please re-enter your move");
 				}
+				
 			}
 		} catch (Exception e) {
 		    System.err.println("Client exception: " + e.toString());
@@ -57,11 +73,11 @@ public class PlayGame {
 		}
 	}
 
-	private static void printState(GameState initState) {
+	protected static void printState(GameState initState) {
 		Square[][] square = initState.getGameBoard();
 		Map<String,Player> players = initState.getPlayers();
 		int boardsize = initState.getBoardSize();
-		
+				
 		for (int i=0 ; i < boardsize ; i++){
 			System.out.println("\n");
 			for(int j=0 ; j < boardsize ; j++){

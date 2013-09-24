@@ -1,8 +1,6 @@
 package org.ds.server.impl;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.ds.server.GameState;
 import org.ds.server.GameStateFactory;

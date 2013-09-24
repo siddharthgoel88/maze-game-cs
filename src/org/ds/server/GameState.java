@@ -2,6 +2,7 @@ package org.ds.server;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,6 +15,7 @@ public class GameState implements Serializable {
 	private int BOARD_SIZE = 5;
 	private int totalNumTreasures = 10;
 	private Square[][] gameBoard = new Square[5][5];
+	private Map<String,String> winner = new HashMap<String,String>();
 	private ConcurrentHashMap<String, Player> players = new ConcurrentHashMap<String, Player>();
 
 	public Square[][] getGameBoard() {
@@ -85,5 +87,13 @@ public class GameState implements Serializable {
 
 	public void setTotalNumTreasures(int totalNumTreasures) {
 		this.totalNumTreasures = totalNumTreasures;
+	}
+
+	public Map<String, String> getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Map<String, String> winner) {
+		this.winner = winner;
 	}
 }

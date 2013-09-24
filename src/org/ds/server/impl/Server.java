@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import org.ds.client.ServerProperties;
 import org.ds.server.ClientHeartBeat;
+import org.ds.server.GameEndCheck;
 import org.ds.server.MovePlayers;
 import org.ds.server.PlayerRegistration;
  
@@ -20,6 +21,7 @@ public class Server {
 		PlayerRegistration regStub;
 		ClientHeartBeat heartBeatStub;
 		MovePlayers movePlayersStub;
+		GameEndCheck gameEndStub;
 		
 		Registry registry;
 		HeartBeatChecker heartBeatChecker = new HeartBeatChecker();
@@ -29,6 +31,7 @@ public class Server {
 			PlayerRegistrationImpl remRegObj = new PlayerRegistrationImpl();
 			ClientHeartBeatImpl remHeartBeatObj = new ClientHeartBeatImpl();
 			MovePlayersImpl movePlayersObj = new MovePlayersImpl();
+			GameEndCheckImpl gameEndObj = new GameEndCheckImpl();
 			
 			regStub = (PlayerRegistration) UnicastRemoteObject.exportObject(
 					remRegObj, 0);
@@ -38,10 +41,14 @@ public class Server {
 			movePlayersStub = (MovePlayers) UnicastRemoteObject.exportObject(
 					movePlayersObj, 0);
 			
-			registry = LocateRegistry.getRegistry(ServerProperties.getServerHostname(),ServerProperties.getServerPort());
+			gameEndStub = (GameEndCheck) UnicastRemoteObject.exportObject(
+					gameEndObj, 0);
+			
+			registry = LocateRegistry.createRegistry(ServerProperties.getServerPort());
 			registry.bind("registrationManager", regStub);
 			registry.bind("heartBeatManager" , heartBeatStub);
 			registry.bind("movePlayers",movePlayersStub);
+			registry.bind("gameEndCheck",gameEndStub);
 			
 			System.out.println("Server Started on port 1099");
 			System.out.println("Services available Registration , Heartbeat , Move Players! ");
