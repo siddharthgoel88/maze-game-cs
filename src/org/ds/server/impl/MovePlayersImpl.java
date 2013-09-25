@@ -31,7 +31,6 @@ public class MovePlayersImpl implements MovePlayers{
 		
 		int resCol=player.getCurrentCol(),resRow = player.getCurrentRow();
 		Map<String , Object> moveMap = new HashMap<String, Object>();
-		Map<String , String> winner = new HashMap<String, String>();
 		Square[][] board = state.getGameBoard(); 
 		
 		if(move.equals(MoveConstants.NOMOVE)){
@@ -69,12 +68,16 @@ public class MovePlayersImpl implements MovePlayers{
 			board[resRow][resCol].setNumTreasures(0);
 		}
 		
-		if(player.getNumTreasures() > maxTreasure)
+		if(player.getNumTreasures() >= maxTreasure)
 		{
-			winner.put("maxTreasure", String.valueOf(player.getNumTreasures()));
-			winner.put("name", player.getName());
-			state.setWinner(winner);
-			maxTreasure = player.getNumTreasures();
+			if(player.getNumTreasures() == maxTreasure){
+				if(!state.getWinner().contains(player))
+					state.getWinner().add(player);
+			}else{
+				maxTreasure = player.getNumTreasures();
+				state.getWinner().clear();
+				state.getWinner().add(player);
+			}
 		}
 		
 		moveMap.put("currentState",state);

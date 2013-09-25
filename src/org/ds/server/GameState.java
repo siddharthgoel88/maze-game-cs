@@ -1,8 +1,8 @@
 package org.ds.server;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,12 +12,16 @@ public class GameState implements Serializable {
 	 * version 1.0
 	 */
 	private static final long serialVersionUID = 356185318404742910L;
-	private int BOARD_SIZE = 5;
-	private int totalNumTreasures = 10;
-	private Square[][] gameBoard = new Square[5][5];
-	private Map<String,String> winner = new HashMap<String,String>();
+	private int BOARD_SIZE;
+	private int totalNumTreasures;
+	private Square[][] gameBoard;
+	private ArrayList<Player> winner = new ArrayList<Player>();
 	private ConcurrentHashMap<String, Player> players = new ConcurrentHashMap<String, Player>();
 
+	public GameState(){	
+	}
+	
+	
 	public Square[][] getGameBoard() {
 		return gameBoard;
 	}
@@ -25,7 +29,10 @@ public class GameState implements Serializable {
 	public void initializeGame() {
 		int randRow, randCol;
 		Random random = new Random();
-
+		
+		GameStateFactory.getGameState().gameBoard = new Square[BOARD_SIZE][BOARD_SIZE];
+		System.out.println("BS: "+BOARD_SIZE+" # treasure:" + totalNumTreasures);
+		
 		for (int i = 0; i < BOARD_SIZE; i++)
 			for (int j = 0; j < BOARD_SIZE; j++)
 				gameBoard[i][j] = new Square();
@@ -52,9 +59,6 @@ public class GameState implements Serializable {
 		return this.BOARD_SIZE;
 	}
 
-	public void setNumTreasures(int numTreasures) {
-		this.totalNumTreasures = numTreasures;
-	}
 
 	public Map<String, Player> getPlayers() {
 		return players;
@@ -89,11 +93,12 @@ public class GameState implements Serializable {
 		this.totalNumTreasures = totalNumTreasures;
 	}
 
-	public Map<String, String> getWinner() {
+	public ArrayList<Player> getWinner() {
 		return winner;
 	}
 
-	public void setWinner(Map<String, String> winner) {
-		this.winner = winner;
-	}
+//	public void setWinner(ArrayList<Player> winner) {
+//		this.winner = winner;
+//	}
+
 }
