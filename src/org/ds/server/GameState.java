@@ -98,8 +98,4 @@ public class GameState implements Serializable {
 		return winner;
 	}
 
-//	public void setWinner(ArrayList<Player> winner) {
-//		this.winner = winner;
-//	}
-
 }

@@ -31,8 +31,14 @@ public class Server {
 		HeartBeatChecker heartBeatChecker = new HeartBeatChecker();
 		Thread heartBeatWorker = new Thread(heartBeatChecker);
 		
-		boardSize=Integer.parseInt(args[0]);
-		numTreasures = Integer.parseInt(args[1]);
+		if(args.length == 2){
+			boardSize=Integer.parseInt(args[0]);
+			numTreasures = Integer.parseInt(args[1]);
+		}else{
+			boardSize = 5;  // Defaults
+			numTreasures = 10;
+		}
+		
 		GameState state = GameStateFactory.getGameState();
 		state.setBoardSize(boardSize);
 		state.setTotalNumTreasures(numTreasures);
