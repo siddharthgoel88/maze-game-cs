@@ -18,6 +18,4 @@ public class GameEndCheckImpl implements GameEndCheck{
 		}
 		return null;
 	}
-	
-
 }

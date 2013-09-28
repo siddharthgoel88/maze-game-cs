@@ -44,8 +44,7 @@ public class PlayGame {
 			GameEndCheckThread gameEndCheck = new GameEndCheckThread();
 			Thread gameEndCheckThread = new Thread(gameEndCheck);
 			gameEndCheckThread.start();
-			
-			
+				
 		    GameState initState = clientManager.getRegistrationStub().getInitialGameState();
 		    printState(initState);
 		    
@@ -53,27 +52,29 @@ public class PlayGame {
 				BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 			    String move;
 				move = bufferRead.readLine().toLowerCase();
-				if(move.matches("[asdwqn]")){
+				if(move.matches("[asdwn]")){
 					Map<String,Object> moveResult = clientManager.getMovePlayerStub().move(p1.getId(), move);
 					if(!Boolean.valueOf((String) moveResult.get("isSuccessful"))){
 						System.out.println((String)moveResult.get("errorMessage"));
 					}
-//					System.out.println(moveResult.get("currentState"));
 					System.out.println("Total number of treasures I acquired:" + (((GameState)moveResult.get("currentState")).getPlayers().get((String)p1.getId())).getNumTreasures());
 					printState((GameState)moveResult.get("currentState"));
 		
+				}else if(move.equals("k")){
+					clientManager.getMovePlayerStub().move(p1.getId(), move);
+					System.out.println("Thank you for playing ! Please play again !");
+					System.exit(2);
 				}else{
 					System.out.println("Invalid Entry. Please re-enter your move");
+				}					
 				}
-				
-			}
 		} catch (Exception e) {
 		    System.err.println("Client exception: " + e.toString());
 		    e.printStackTrace();
 		}
 	}
 
-	protected static void printState(GameState initState) {
+	public static void printState(GameState initState) {
 		Square[][] square = initState.getGameBoard();
 		Map<String,Player> players = initState.getPlayers();
 		int boardsize = initState.getBoardSize();

@@ -18,7 +18,8 @@ public class GameState implements Serializable {
 	private ArrayList<Player> winner = new ArrayList<Player>();
 	private ConcurrentHashMap<String, Player> players = new ConcurrentHashMap<String, Player>();
 
-	public GameState(){	
+	public GameState(){
+		
 	}
 	
 	
@@ -80,9 +81,9 @@ public class GameState implements Serializable {
 	}
 	
 	public void cleanUpPlayer(Player player){
-		players.remove(player.id);
 		gameBoard[player.currentRow][player.currentCol].isFree = true;
 		gameBoard[player.currentRow][player.currentCol].userId = null;
+		players.remove(player.id);
 	}
 
 	public int getTotalNumTreasures() {

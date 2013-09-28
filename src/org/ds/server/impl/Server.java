@@ -20,6 +20,7 @@ public class Server {
 	}
 	
 	public void init(String[] args){
+		
 		int boardSize,numTreasures;
 		PlayerRegistration regStub;
 		ClientHeartBeat heartBeatStub;

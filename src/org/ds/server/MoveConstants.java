@@ -6,4 +6,5 @@ public class MoveConstants {
 	public static String NORTH = "w";
 	public static String SOUTH = "s";
 	public static String NOMOVE = "x";
+	public static String KILL = "k";
 }
