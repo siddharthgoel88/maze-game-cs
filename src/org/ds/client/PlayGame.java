@@ -11,8 +11,6 @@ import org.ds.server.Square;
 
 public class PlayGame {
 	
-	
-	
 	public static void main(String[] args) {
 		
 		System.out.println("Hello. Please enter your name:");
@@ -52,7 +50,7 @@ public class PlayGame {
 				BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 			    String move;
 				move = bufferRead.readLine().toLowerCase();
-				if(move.matches("[asdwn]")){
+				if(move.matches("[asdwx]")){
 					Map<String,Object> moveResult = clientManager.getMovePlayerStub().move(p1.getId(), move);
 					if(!Boolean.valueOf((String) moveResult.get("isSuccessful"))){
 						System.out.println((String)moveResult.get("errorMessage"));

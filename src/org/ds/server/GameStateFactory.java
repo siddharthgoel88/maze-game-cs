@@ -8,6 +8,6 @@ public class GameStateFactory {
 			gameState = new GameState();
 		}
 		return gameState;
-	}
+	} 
 	
 }

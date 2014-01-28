@@ -17,7 +17,8 @@ public class GameState implements Serializable {
 	private Square[][] gameBoard;
 	private ArrayList<Player> winner = new ArrayList<Player>();
 	private ConcurrentHashMap<String, Player> players = new ConcurrentHashMap<String, Player>();
-
+	private boolean isGameOn = true;
+	
 	public GameState(){
 		
 	}
@@ -96,6 +97,16 @@ public class GameState implements Serializable {
 
 	public ArrayList<Player> getWinner() {
 		return winner;
+	}
+
+
+	public boolean isGameOn() {
+		return isGameOn;
+	}
+
+
+	public void setGameOn(boolean isGameOn) {
+		this.isGameOn = isGameOn;
 	}
 
 }
