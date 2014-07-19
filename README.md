@@ -1,5 +1,5 @@
-Multiplayer Maze Game - (Client server model)
-=============================================
+#Maze Game - (Client server model)
+-------------------------------------------
 
 Description
 -----------
